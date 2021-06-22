@@ -5,6 +5,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 ## Development server
 
 Replace <bitbucket-host-url> with Bitbucket Host URL (eg.: https://bitbucket.org).
+  
 Run `npm start` for a dev server. Navigate to `http://localhost:5200/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
