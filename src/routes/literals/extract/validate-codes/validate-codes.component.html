@@ -1,0 +1,78 @@
+<div class="container p-py-4">
+  <p-card>
+    <ng-template pTemplate="header">
+      <h2 class="p-m-0 p-pt-4 p-px-3">Validate Extracted Literals</h2>
+    </ng-template>
+    <p-table #dt
+             [columns]="cols"
+             [value]="legacyLiterals"
+             *ngIf="legacyLiterals != null; else literalsNotFound"
+             styleClass="p-datatable-gridlines"
+             [paginator]="true"
+             [rows]="10"
+             [showCurrentPageReport]="true"
+             currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+             [rowsPerPageOptions]="[10,20,30,40,50]">
+      <ng-template pTemplate="caption">
+        <div class="p-d-flex">
+          <button type="button" pButton pRipple icon="pi pi-file-o" (click)="dt.exportCSV()" class="p-ml-auto p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="colgroup">
+        <colgroup>
+          <col style="width:10%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <col style="width:15%">
+          <col style="width:60%">
+        </colgroup>
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>Sr. No.</th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Folder
+              <p-sortIcon field="pathName"></p-sortIcon>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Code
+              <p-sortIcon field="code"></p-sortIcon>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Type
+              <p-sortIcon field="menu"></p-sortIcon>
+            </div>
+          </th>
+          <th>
+            <div class="p-d-flex p-jc-between p-ai-center">
+              Default Text
+              <p-sortIcon field="menu"></p-sortIcon>
+            </div>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-literal let-i="rowIndex">
+        <tr>
+          <td>{{i + 1}}</td>
+          <td>{{literal.pathName}}</td>
+          <td>{{literal.code}}</td>
+          <td>{{literal.type}}</td>
+          <td>{{literal.text}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+    <ng-template #literalsNotFound>
+      <h4>Literals not found. Please go back to <a [routerLink]="extractCodePath">Extract Code</a> step and extract the literals.</h4>
+    </ng-template>
+    <ng-template pTemplate="footer" *ngIf="legacyLiterals != null;">
+      <div class="p-d-flex p-jc-end">
+        <button pButton label="Next" (click)="goToUploadLiterals()"></button>
+      </div>
+    </ng-template>
+  </p-card>
+</div>

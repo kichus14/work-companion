@@ -1,0 +1,17 @@
+<div class="p-fluid p-grid">
+  <div class="p-field p-col-12">
+      <p-tree
+        [value]="branchFilesTree"
+        [filter]="true"
+        [loading]="folderTreeLoading"
+        [scrollHeight]="'250px'"
+        selectionMode="multiple"
+        [(selection)]="folderFiles"
+      >
+      </p-tree>
+  </div>
+</div>
+<div class="p-d-flex p-jc-end">
+  <button pButton class="p-mr-3 p-button-outlined secondary" label="Reset" (click)="resetTree()" [disabled]="hasSelectedFiles"></button>
+  <button pButton label="Next" (click)="goToNext()" [disabled]="hasSelectedFiles"></button>
+</div>

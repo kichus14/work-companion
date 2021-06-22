@@ -1,0 +1,15 @@
+export const Path = {
+  home: 'home',
+  login: 'login',
+  literals: 'literals',
+  extractLiterals: 'extract',
+  extractLiterals_FetchCodes: 'fetch-codes',
+  extractLiterals_ValidateCodes: 'validate-codes',
+  extractLiterals_UploadLiterals: 'upload-literals',
+  extractLiterals_exportLiterals: 'export-literals',
+  validateLiterals: 'validate',
+  validateLiterals_ExtractKOD: 'extract-kod',
+  validateLiterals_listKOD: 'list-kod',
+  validateLiterals_KODMapping: 'kod-mapping',
+  validateLiterals_literalResults: 'results',
+};

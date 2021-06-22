@@ -1,0 +1,52 @@
+:host {
+  background-color: var(--surface-b);
+  min-height: 100vh;
+  display: block;
+  ::ng-deep {
+    .p-avatar-text {
+      font-size: 0.825em;
+    }
+    .p-steps .p-steps-item .p-menuitem-link {
+      background-color: transparent;
+    }
+  }
+}
+h3 {
+  img.p-avatar-image {
+    max-width: 2rem;
+  }
+}
+
+.avatar-image {
+    border-radius: 50%;
+    overflow: hidden;
+  align-items: center;
+  display: inline-flex;
+  font-size: 1rem;
+  height: 2rem;
+  justify-content: center;
+  width: 2rem;
+  vertical-align: middle;
+  background-color: var(--pink-600);
+}
+
+.setting-button {
+  position: fixed;
+  top: 4rem;
+  right: 2rem;
+}
+
+.setting-overlay ::ng-deep {
+  .p-overlaypanel {
+    //overflow: auto;
+    &::before {
+      left: auto;
+      right: 25px;
+    }
+
+    &::after {
+      left: auto;
+      right: 27px;
+    }
+  }
+}

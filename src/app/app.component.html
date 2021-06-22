@@ -1,0 +1,35 @@
+<p-menubar [model]="items" *ngIf="userDetail != null">
+  <ng-template pTemplate="start">
+    <h3 class="p-mr-3 p-my-0 p-d-flex p-ai-center" [ngStyle]="{color:'var(--primary-color)'}">
+      <img src="assets/automation.png" alt="image" class="p-avatar p-avatar-image p-mr-2"/>
+      Work Companion
+    </h3>
+  </ng-template>
+  <ng-template pTemplate="end">
+    <h4 class="p-my-0 p-mr-5" [ngStyle]="{color:'var(--primary-color)'}">
+      <p-avatar *ngIf="showFallbackImage" [label]="iconLabel" styleClass="p-mr-2" shape="circle" [style]="{background:'var(--pink-600)', color: 'var(--primary-color-text)'}"></p-avatar>
+      <img *ngIf="!showFallbackImage" [src]='"image/users/" + userDetail.slug + "/avatar.png"' class="p-mr-2 avatar-image" (error)="imgLoadError($event)"  alt="avatar"/>
+      {{userDetail.displayName}}
+    </h4>
+  </ng-template>
+</p-menubar>
+<router-outlet></router-outlet>
+<p-toast></p-toast>
+<p-confirmPopup></p-confirmPopup>
+<p-button class="setting-button" icon="pi pi-cog" (click)="op.toggle($event)"></p-button>
+<p-overlayPanel #op [showCloseIcon]="true" [style]="{width: '650px', maxHeight: 'calc(100vh - 10rem)'}" class="setting-overlay">
+  <ng-template pTemplate>
+    <h5>Light Themes</h5>
+    <ng-container *ngFor="let theme of themes">
+      <ng-container *ngIf="theme.type === 'light'">
+        <p-button class="p-m-2 p-d-inline-block"  [label]="theme.name + ' - ' + theme.color" (click)="changeTheme(theme)"></p-button>
+      </ng-container>
+    </ng-container>
+    <h5>Dark Themes</h5>
+    <ng-container *ngFor="let theme of themes">
+      <ng-container  *ngIf="theme.type === 'dark'">
+        <p-button class="p-m-2 p-d-inline-block"  [label]="theme.name + ' - ' + theme.color" (click)="changeTheme(theme)"></p-button>
+      </ng-container>
+    </ng-container>
+  </ng-template>
+</p-overlayPanel>

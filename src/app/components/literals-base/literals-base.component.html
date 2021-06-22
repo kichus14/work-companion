@@ -1,0 +1,26 @@
+<p-fileUpload
+  #fileUploader
+  [customUpload]="true"
+  name="uploadedFile[]"
+  (uploadHandler)="fileUploaded($event)"
+  [multiple]="true"
+  accept="text/xml"
+  cancelLabel="Clear"
+>
+  <ng-template pTemplate="toolbar">
+    <h4>Accepts only .xml files</h4>
+  </ng-template>
+  <ng-template pTemplate="file" let-file>
+    <div class="p-grid p-my-2">
+      <div class="p-col p-as-center">
+        <i class="pi pi-file p-mr-3"></i>
+        <span class="p-mr-3">{{file.name}}</span>
+        <small>{{convertFileSize(file.size)}}</small>
+      </div>
+      <div class="p-col p-text-right">
+        <button pButton type="button" icon="pi pi-times" class="p-px-2 p-button-danger" (click)="removeFile($event, file, fileUploader)"></button>
+      </div>
+    </div>
+  </ng-template>
+</p-fileUpload>
+

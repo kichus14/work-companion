@@ -1,0 +1,21 @@
+<div class="container p-my-2">
+  <p-card styleClass="p-my-4">
+    <p-accordion>
+      <p-accordionTab [selected]="!filesTabActive" (selectedChange)="selectBranchTabChange($event)">
+        <ng-template pTemplate="header">
+          Select Repo and Branch
+        </ng-template>
+        <app-select-branch (branchSelect)="onBranchSelected($event)"></app-select-branch>
+      </p-accordionTab>
+      <p-accordionTab [disabled]="selectedBranch == null" [selected]="filesTabActive">
+        <ng-template pTemplate="header">
+          Get Files<small>(.pug)</small>&nbsp;from Repo
+        </ng-template>
+        <app-folder-select *ngIf="selectedBranch != null" [branch]="selectedBranch" (selectedFiles)="onFilesSelected($event)"></app-folder-select>
+      </p-accordionTab>
+    </p-accordion>
+  </p-card>
+</div>
+<p-blockUI *ngIf="selectedBranch != null" [blocked]="blocked">
+  <p-progressSpinner></p-progressSpinner>
+</p-blockUI>

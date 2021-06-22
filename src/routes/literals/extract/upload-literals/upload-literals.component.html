@@ -1,0 +1,24 @@
+<div class="container p-mt-2">
+  <p-card>
+    <ng-template pTemplate="header">
+      <h2 class="p-m-0 p-pt-4 p-px-3">Upload Literals Master files <small>(.xml)</small></h2>
+    </ng-template>
+    <div class="p-pt-3 p-px-4" *ngIf="legacyLiteralLanguages">
+      <div class="p-grid">
+        <div class="col">
+          <h5 class="p-mt-0">Literals Master is loaded. You can continue or reload the data.</h5>
+        </div>
+        <div class="col p-ml-auto">
+        <button pButton label="Next" (click)="goToExportLiterals()"></button>
+      </div>
+      </div>
+      <div class="p-grid">
+        <div class="col" *ngFor="let litCodes of legacyLiteralLanguages">
+          <p><strong>Code Type:</strong> {{litCodes.type}} <strong>Count:</strong> {{litCodes.codes.length}}</p>
+        </div>
+      </div>
+    </div>
+<!--    <app-literals-base (filesSelected)="filesSelected($event)"></app-literals-base>-->
+    <app-fetch-literals (extractedLiterals)="extractedLiterals($event)"></app-fetch-literals>
+  </p-card>
+</div>

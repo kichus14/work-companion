@@ -1,0 +1,24 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/primeng.min.css";
+@import "~primeflex/primeflex.min.css";
+
+body {
+  margin:0;
+  padding: 0;
+}
+
+.container {
+  width: 1200px;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 0.875em;
+}
+
+.p-error {
+  display: block;
+}
+
+.text-danger {
+  color: #d13438;
+}

@@ -1,0 +1,18 @@
+{
+  "/api": {
+    "target": "<bitbucket-host-url>",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api": "/rest/api/latest"
+    }
+  },
+  "/image": {
+    "target": "<bitbucket-host-url>",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/image": ""
+    }
+  }
+}

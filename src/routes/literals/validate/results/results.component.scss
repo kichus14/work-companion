@@ -1,0 +1,14 @@
+tr.bg-danger {
+  > td > span {
+    color: #ff0000;
+  }
+  ::ng-deep {
+    .p-button.p-button-text.p-button-plain {
+      color: #ff0000;
+      &:hover {
+        background-color: #ffe0e0;
+        color: #ff0000;
+      }
+    }
+  }
+}

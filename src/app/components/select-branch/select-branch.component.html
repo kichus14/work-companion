@@ -1,0 +1,13 @@
+<p-tree #projectTree [value]="projectsTree" [filter]="true" [loading]="projectTreeLoading" [scrollHeight]="'250px'">
+  <ng-template let-node pTemplate="default">
+    <div class="node-label" [ngClass]="[node.selectable ? 'selectable p-px-3' : '', node.partialSelected ? 'selected' : '']"
+      (click)="selectNode($event, node)">
+      <button *ngIf="!node.selectable" pRipple class="p-mr-3 btn-tree-toggle p-link"
+        (click)="expandTreeNode($event, node)">
+          <i [class]="node.expanded ? 'pi-chevron-down': 'pi-chevron-right'" class="pi"></i>
+      </button>
+      <i [class]="node.expanded ? node.expandedIcon : node.collapsedIcon" class="p-mr-2"></i>
+      {{node.label}}
+    </div>
+  </ng-template>
+</p-tree>

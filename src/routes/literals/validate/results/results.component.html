@@ -1,0 +1,122 @@
+<div class="container p-mt-3">
+  <p-card styleClass="p-my-4">
+    <p-accordion *ngIf="extractedKodTranslations != null && selectedBranchFiles != null; else extractedKodsNotFound">
+      <p-accordionTab [selected]="selectedFiles == null || translationResults == null">
+        <ng-template pTemplate="header">
+          Get Files<small>(.xlf)</small>&nbsp;from Repo
+        </ng-template>
+        <app-folder-select *ngIf="selectedBranchFiles != null"
+                           [foldersTree]="selectedBranchFiles"
+                           fileExtension="xlf"
+                           (selectedFiles)="onFilesSelected($event)">
+        </app-folder-select>
+      </p-accordionTab>
+      <p-accordionTab header="Translation Results" [disabled]="selectedFiles == null" [selected]="selectedFiles != null && translationResults != null">
+        <p-table #dt *ngIf="translationResults != null"
+                 [columns]="columns"
+                 [value]="translationResults"
+                 styleClass="p-datatable-gridlines"
+                 dataKey="id"
+                 [paginator]="true"
+                 [rows]="10"
+                 [showCurrentPageReport]="true"
+                 currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                 [rowsPerPageOptions]="[10,20,30,40,50]"
+                 [exportFilename]="exportFileName"
+        >
+          <ng-template pTemplate="colgroup">
+            <colgroup>
+              <col style="width:12%;">
+              <col style="width:64%">
+              <col style="width:12%">
+              <col style="width:12%">
+            </colgroup>
+          </ng-template>
+          <ng-template pTemplate="caption">
+            <div class="p-d-flex">
+              <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="dt.exportCSV()" class="p-mr-2" pTooltip="CSV" tooltipPosition="bottom"></button>
+            </div>
+          </ng-template>
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Result</th>
+              <th>Key</th>
+              <th>Code</th>
+              <th>Type</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-literalResult let-expanded="expanded">
+            <tr [ngClass]="literalResult.result === literalResultStates.fail ? 'bg-danger': ''">
+              <td class="p-d-flex p-jc-between p-ai-center">
+                <span class="p-mr-1">{{literalResult.result}}</span>
+                <button type="button" pButton pRipple [pRowToggler]="literalResult"
+                        class="p-button-text p-button-rounded p-button-plain p-align-center"
+                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+              </td>
+              <td>{{literalResult.id}}</td>
+              <td>{{literalResult.code}}</td>
+              <td>{{literalResult.type}}</td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="rowexpansion" let-literalResult>
+            <tr>
+              <td colspan="4">
+                <div class="p-p-2">
+                  <table>
+                    <colgroup>
+                      <col style="width: 12%;">
+                      <col style="width: 12%;">
+                      <col style="width: 38%;">
+                      <col style="width: 38%;">
+                    </colgroup>
+                    <thead class="p-datatable-thead">
+                    <tr>
+                      <th>Result</th>
+                      <th>Language</th>
+                      <th>Expected</th>
+                      <th>Actual</th>
+                    </tr>
+                    </thead>
+                    <tbody class="p-datatable-tbody">
+                      <tr [ngClass]="literalResult.de.result === literalResultStates.fail ? 'bg-danger': ''">
+                        <td><span>{{literalResult.de.result}}</span></td>
+                        <td>German</td>
+                        <td>{{literalResult.de.expected}}</td>
+                        <td>{{literalResult.de.actual}}</td>
+                      </tr>
+                      <tr [ngClass]="literalResult.en.result === literalResultStates.fail ? 'bg-danger': ''">
+                        <td><span>{{literalResult.en.result}}</span></td>
+                        <td>English</td>
+                        <td>{{literalResult.en.expected}}</td>
+                        <td>{{literalResult.en.actual}}</td>
+                      </tr>
+                      <tr [ngClass]="literalResult.fr.result === literalResultStates.fail ? 'bg-danger': ''">
+                        <td><span>{{literalResult.fr.result}}</span></td>
+                        <td>French</td>
+                        <td>{{literalResult.fr.expected}}</td>
+                        <td>{{literalResult.fr.actual}}</td>
+                      </tr>
+                      <tr [ngClass]="literalResult.nl.result === literalResultStates.fail ? 'bg-danger': ''">
+                        <td><span>{{literalResult.nl.result}}</span></td>
+                        <td>Dutch</td>
+                        <td>{{literalResult.nl.expected}}</td>
+                        <td>{{literalResult.nl.actual}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-accordionTab>
+    </p-accordion>
+    <ng-template #extractedKodsNotFound>
+      <h4>KODs not found. Please go back to <a [routerLink]="extractKodPath">Extract KOD</a> step and extract the KODs.
+      </h4>
+    </ng-template>
+  </p-card>
+</div>
+<p-blockUI *ngIf="selectedBranchFiles != null" [blocked]="blocked">
+  <p-progressSpinner></p-progressSpinner>
+</p-blockUI>
