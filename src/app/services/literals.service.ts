@@ -116,7 +116,11 @@ export class LiteralsService {
         if (body == null || attributes == null) {
           return undefined;
         }
-        const lang = attributes['target-language'];
+        let lang = attributes['target-language'];
+        const fileNameArray = file.fileName.replace('.translatable', '').split('.');
+        if (fileNameArray.length > 1) {
+          lang = fileNameArray[1];
+        }
         const xlfLiterals: XLFLiterals = {
           lang,
         } as XLFLiterals;
