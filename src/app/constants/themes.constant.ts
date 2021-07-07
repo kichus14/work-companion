@@ -6,6 +6,7 @@ export interface AppTheme {
 }
 
 export const THEMES: AppTheme[] = [
+  { name: 'Fluent UI', type: 'light', color: '', slug: 'fluent-light' },
   {name: 'Bootstrap', type: 'light', color: 'blue', slug: 'bootstrap4-light-blue'},
   {name: 'Bootstrap', type: 'dark', color: 'blue', slug: 'bootstrap4-dark-blue'},
   {name: 'Bootstrap', type: 'light', color: 'purple', slug: 'bootstrap4-light-purple'},
@@ -13,8 +14,7 @@ export const THEMES: AppTheme[] = [
   {name: 'Material Design', type: 'light', color: 'indigo', slug: 'md-light-indigo'},
   {name: 'Material Design', type: 'dark', color: 'indigo', slug: 'md-dark-indigo'},
   {name: 'Material Design', type: 'light', color: 'deep Purple', slug: 'md-light-deeppurple'},
-  {name: 'Material Design', type: 'dark', color: 'deep Purple', slug: 'md-dark-deeppurple'},
-  {name: 'Fluent UI', type: 'light', color: '', slug: 'fluent-light'},
+  { name: 'Material Design', type: 'dark', color: 'deep Purple', slug: 'md-dark-deeppurple' },
   {name: 'Saga', type: 'light', color: 'blue', slug: 'saga-blue'},
   {name: 'Saga', type: 'light', color: 'green', slug: 'saga-green'},
   {name: 'Saga', type: 'light', color: 'orange', slug: 'saga-orange'},

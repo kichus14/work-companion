@@ -1,24 +1,26 @@
 <section class="intro">
   <div class="mask p-d-flex align-items-center gradient-custom" style="height:100vh">
     <div class="container">
-      <div class="p-grid p-jc-center p-ai-center vertical-container" style="height:100vh">
-        <div class="p-col-8">
-          <h1 class="p-text-center" [ngStyle]="{color:'var(--primary-color)'}">Work Companion</h1>
+      <div class="p-grid p-jc-center p-ac-center vertical-container" style="height:100vh">
+        <div class="p-col-12">
+          <h1 class="p-component p-text-center p-my-3 p-text-bold" [ngStyle]="{color:'var(--primary-color)'}">Work Companion
+          </h1>
+        </div>
+        <div class="p-col-12 p-md-5 p-lg-4">
           <div class="p-shadow-15">
           <p-card>
             <ng-template pTemplate="header">
-              <h2 class="p-m-0 p-px-4 p-pt-4 p-pb-2 p-text-center p-text-normal" [ngStyle]="{color:'var(--primary-color)'}">Bitbucket Login</h2>
+              <h2 class="p-m-0 p-px-4 p-pt-4 p-pb-2 p-text-center p-text-normal" [ngStyle]="{color:'var(--primary-color)'}">
+                <i class="pi pi-fw pi-unlock" style="font-size: 1em;" [ngStyle]="{color:'var(--pink-600)'}"></i>
+                Bitbucket Login
+              </h2>
             </ng-template>
           <div class="p-grid p-pb-3">
-            <div class="p-col-md-6 p-lg-6 p-text-center"
-                 style="padding-right: 24px;">
-              <i class="pi pi-fw pi-unlock" style="font-size: 12em;" [ngStyle]="{color:'var(--pink-600)'}"></i>
-            </div>
-            <div class="p-col-md-6 p-lg-6">
+            <div class="p-col-12">
               <form [formGroup]="loginForm" (ngSubmit)="doLogin()" class="p-inputtext-lg p-text-left">
                 <div class="p-field p-mb-5">
                   <div class="p-float-label">
-                    <input pInputText type="text" id="username" formControlName="username"/>
+                    <input pInputText type="text" id="username" formControlName="username" class="p-col-12" autocomplete="off" />
                     <label for="username">Username</label>
                   </div>
                   <small class="p-error" *ngIf="showControlError('username', 'required')">Please enter a
@@ -26,15 +28,16 @@
                 </div>
                 <div class="p-field p-mb-3">
                   <div class="p-float-label">
-                    <input pPassword type="password" id="password" formControlName="password" [feedback]="false"/>
+                    <input pPassword type="password" id="password" formControlName="password" [feedback]="false" class="p-col-12"
+                      autocomplete="off" />
                     <label for="password">Password</label>
                   </div>
                   <small class="p-error" *ngIf="showControlError('password', 'required')">Please enter a
                     password.</small>
                 </div>
-                <div class="text-center">
-                  <button pButton pRipple icon="pi pi-chevron-right" class="p-button-help" iconPos="right" type="submit"
-                          label="Login" [disabled]="loginForm.invalid"></button>
+                <div class="p-d-flex p-jc-center">
+                  <button pButton pRipple icon="pi pi-chevron-right" iconPos="right" type="submit" label="Login" class="p-button-raised"
+                    [disabled]="loginForm.invalid"></button>
                 </div>
               </form>
             </div>
