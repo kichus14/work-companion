@@ -22,6 +22,7 @@ interface LiteralResult {
   id: string;
   code?: string;
   type?: LiteralTypes;
+  file?: BranchFile;
   result: ResultState;
   en: LanguageResult;
   de: LanguageResult;
@@ -48,17 +49,18 @@ export class ResultsComponent {
     { field: 'type', header: 'Type' },
     { field: 'code', header: 'Code' },
     { field: 'id', header: 'Key' },
+    { field: 'file.path', header: 'File Path' },
     { field: 'de.result', header: 'German Result' },
-    { field: 'de.actual', header: 'German Actual' },
+    { field: 'de.actual', header: 'German Actual (in .xlf file)' },
     { field: 'de.expected', header: 'German Expected' },
     { field: 'en.result', header: 'English Result' },
-    { field: 'en.actual', header: 'English Actual' },
+    { field: 'en.actual', header: 'English Actual (in .xlf file)' },
     { field: 'en.expected', header: 'English Expected' },
     { field: 'fr.result', header: 'French Result' },
-    { field: 'fr.actual', header: 'French Actual' },
+    { field: 'fr.actual', header: 'French Actual (in .xlf file)' },
     { field: 'fr.expected', header: 'French Expected' },
     { field: 'nl.result', header: 'Dutch Result' },
-    { field: 'nl.actual', header: 'Dutch Actual' },
+    { field: 'nl.actual', header: 'Dutch Actual (in .xlf file)' },
     { field: 'nl.expected', header: 'Dutch Expected' },
   ];
 
@@ -102,6 +104,7 @@ export class ResultsComponent {
               id: kod.key,
               code: kod.id,
               type: kod.type,
+              file: kod.file,
               result: this.getOverAllResult(deResult, enResult, nlResult, frResult),
               de: {
                 actual: deLiteral,

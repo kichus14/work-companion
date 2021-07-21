@@ -74,6 +74,11 @@ function convertLinksArrayToString<T>(response: any): T[] {
 })
 export class BitbucketFoldersService {
 
+  private projects$?: Observable<Project[]>;
+  private repos = new Map<string, Observable<Repos[]>>();
+  private branches = new Map<string, Observable<Branch[]>>();
+  private branchFiles = new Map<string, Observable<BranchFile[]>>();
+
   constructor(
     private readonly apiService: ApiService,
     private readonly localStorage: LocalStorageService,
@@ -81,28 +86,39 @@ export class BitbucketFoldersService {
   }
 
   public getProjects(): Observable<Project[]> {
-    return this.apiService.get('projects?start=0&limit=1000').pipe(
-      map((response: any) => {
-        return convertLinksArrayToString<Project>(response);
-      }),
-      shareReplay({bufferSize: 1, refCount: true}),
-    );
+    if (!this.projects$) {
+      this.projects$ = this.apiService.get('projects?start=0&limit=1000').pipe(
+        map((response: any) => {
+          return convertLinksArrayToString<Project>(response);
+        }),
+        shareReplay(1),
+      );
+    }
+    return this.projects$;
   }
 
   public getRepos(projectKey: string): Observable<Repos[]> {
-    return this.apiService.get(`projects/${projectKey}/repos?avatarSize=48&start=0&limit=1000`).pipe(
-      map((response: any) => {
-        return convertLinksArrayToString<Repos>(response).map((repo) => {
-          const key = (projectKey + '-' + repo.slug).toLowerCase();
-          return {...repo, key};
-        });
-      }),
-      shareReplay({bufferSize: 1, refCount: true}),
-    );
+    if (!this.repos.has(projectKey)) {
+      this.repos.set(projectKey,
+        this.apiService.get(`projects/${projectKey}/repos?avatarSize=48&start=0&limit=1000`).pipe(
+          map((response: any) => {
+            return convertLinksArrayToString<Repos>(response).map((repo) => {
+              const key = (projectKey + '-' + repo.slug).toLowerCase();
+              return { ...repo, key };
+            });
+          }),
+          shareReplay(1),
+        )
+      );
+    }
+    return this.repos.get(projectKey) as Observable<Repos[]>;
   }
 
   public getBranches(projectKey: string, reposKey: string): Observable<Branch[]> {
-    return this.apiService.get(`projects/${projectKey}/repos/${reposKey}/branches?avatarSize=48&start=0&limit=1000`)
+    const cacheKey = `${projectKey}|${reposKey}`;
+    if (!this.branches.has(cacheKey)) {
+      this.branches.set(cacheKey,
+        this.apiService.get(`projects/${projectKey}/repos/${reposKey}/branches?avatarSize=48&start=0&limit=1000`)
       .pipe(
         map((response: any) => {
         return convertLinksArrayToString<Branch>(response).map((branch) => {
@@ -110,19 +126,24 @@ export class BitbucketFoldersService {
           return {...branch, key};
         });
       }),
-      shareReplay({bufferSize: 1, refCount: true}),
-    );
+        shareReplay(1),
+      ));
+    }
+    return this.branches.get(cacheKey) as Observable<Branch[]>;
   }
 
   public getFilesList(projectKey: string, reposKey: string, branch: string): Observable<BranchFile[]> {
     const repoLink = `projects/${projectKey}/repos/${reposKey}`;
-    return this.apiService.get(`${repoLink}/files?at=${branch}&limit=100000`)
+    const cacheKey = `${repoLink}|${branch}`;
+    if (!this.branchFiles.has(cacheKey)) {
+      this.branchFiles.set(cacheKey,
+        this.apiService.get(`${repoLink}/files?at=${branch}&limit=100000`)
       .pipe(map((response: any) => {
         const results: BranchFile[] = [];
         const level: any = {results};
         const paths = response.values;
         paths.forEach((path: string) => {
-          path.split('/').reduce((currentLevel: any, name: string, i: number, a: string[]) => {
+          path.split('/').reduce((currentLevel: any, name: string, _: number, a: string[]) => {
             if (!currentLevel[name]) {
               const fileExtensionRegex = new RegExp(/(?:\.([^.]+))?$/);
               const filePath = fileExtensionRegex.exec(name);
@@ -156,7 +177,11 @@ export class BitbucketFoldersService {
           }, level);
         });
         return level.results;
-      }));
+      }),
+        shareReplay(1)
+      ));
+    }
+    return this.branchFiles.get(cacheKey) as Observable<BranchFile[]>;
   }
 
   public getFilesAt(repoLink: string, branch: string, filePath: string): Observable<any> {

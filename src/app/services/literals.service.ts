@@ -52,6 +52,7 @@ export interface KODCode {
   type?: LiteralTypes;
   code?: string;
   key: string;
+  file: BranchFile;
 }
 
 export interface XLFLanguage {
@@ -167,6 +168,7 @@ export class LiteralsService {
                 const [fullMatch, a, key] = noKodMatches;
                 kods.push({
                   key,
+                  file,
                 });
               }
             } else {
@@ -175,6 +177,7 @@ export class LiteralsService {
                 type: category as LiteralTypes,
                 code,
                 key,
+                file,
               });
             }
           });
