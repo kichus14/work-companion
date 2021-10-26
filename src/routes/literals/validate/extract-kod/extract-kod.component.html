@@ -1,5 +1,15 @@
 <div class="container p-mt-3">
   <p-card styleClass="p-my-4">
+    <ng-container *ngIf="!showAccordion">
+    <p>
+      If you already have extracted the literals and mapping against the i18n key then Upload here.
+      <br>
+      <br>
+      <p-fileUpload #fubauto [customUpload]="true" mode="basic" name="manualMappingFile[]" accept="text/csv"
+                    [maxFileSize]="1000000" (uploadHandler)="uploadKODMapping($event, fubauto)"
+                    [auto]="true" chooseLabel="Browse"></p-fileUpload>
+    </p>
+    </ng-container>
     <p-accordion>
       <p-accordionTab [selected]="selectedBranch == null">
         <ng-template pTemplate="header">

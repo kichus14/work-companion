@@ -3,6 +3,7 @@ import {NgModule} from '@angular/core';
 import {AccordionModule} from 'primeng/accordion';
 import {BlockUIModule} from 'primeng/blockui';
 import {CardModule} from 'primeng/card';
+import {FileUploadModule} from 'primeng/fileupload';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {ComponentModule} from '../../../../app/components/component.module';
 
@@ -21,7 +22,8 @@ import {ExtractKodComponent} from './extract-kod.component';
         ComponentModule,
         BlockUIModule,
         AccordionModule,
-        ProgressSpinnerModule
+        ProgressSpinnerModule,
+        FileUploadModule
     ]
 })
 export class ExtractKodModule { }
